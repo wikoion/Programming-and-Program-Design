@@ -1,0 +1,32 @@
+fun main() {
+    println("=== Temperature Conversion Tool (Demo Mode) ===")
+
+    // Example test values — change these to test different conversions
+    val value = 100.0
+    val fromUnit = "C"
+    val toUnit = "F"
+
+    try {
+        val result = convertTemperature(value, fromUnit, toUnit)
+        println("✅ Result: $value°$fromUnit = %.2f°$toUnit".format(result))
+    } catch (e: Exception) {
+        println("❌ Error: ${e.message}")
+    }
+}
+
+fun convertTemperature(value: Double, fromUnit: String, toUnit: String): Double {
+    val celsius = when (fromUnit.uppercase()) {
+        "C" -> value
+        "F" -> (value - 32) * 5 / 9
+        "K" -> value - 273.15
+        else -> throw IllegalArgumentException("Unsupported source unit: $fromUnit")
+    }
+
+    return when (toUnit.uppercase()) {
+        "C" -> celsius
+        "F" -> (celsius * 9 / 5) + 32
+        "K" -> celsius + 273.15
+        else -> throw IllegalArgumentException("Unsupported target unit: $toUnit")
+    }
+}
+
