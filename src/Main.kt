@@ -1,5 +1,3 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
     println("Welcome to the Interactive Kotlin Command-Line Utility!")
     println("Available commands: sum, conversion, factorial, exit")
@@ -9,9 +7,9 @@ fun main() {
         val command = readLine()?.trim()?.lowercase() ?: ""
 
         when (command) {
-            "sum" -> handleSum()
-            "conversion" -> handleConversion()
-            "factorial" -> handleFactorial()
+            "sum" -> handleSumCommand()
+            "conversion" -> handleConversionCommand()
+            "factorial" -> handleFactorialCommand()
             "exit" -> {
                 println("Exiting the application. Goodbye!")
                 break
@@ -19,23 +17,25 @@ fun main() {
             else -> println("Invalid command. Please use: sum, conversion, factorial, or exit")
         }
     }
-}fun handleSum(parts: List<String>): Boolean {
-    if (parts.size != 2) {
-        println("Usage: sum <n>   (n > 0)")
-        return true
-    }
-
-    val n = parts[1].toIntOrNull()
-    if (n == null || n <= 0) {
-        println("Error: '$parts[1]' is not a positive integer")
-        return true
-    }
-
-    val result = sumOfCubes(n)
-    println("Sum of cubes (1^3 + ... + $n^3) = $result")
-    return true
 }
 
-fun sumOfCubes(n: Int): Long {
-    val temp = n.toLong() * (n + 1) / 2
-    return temp * temp
+fun handleSumCommand() {
+    println("Enter a natural number (positive integer) for sum of cubes:")
+    val input = readLine()?.toIntOrNull()
+
+    if (input == null || input <= 0) {
+        println("Error: Please enter a positive integer.")
+        return
+    }
+
+    val result = calculateSumOfCubes(input)
+    println("Sum of cubes from 1^3 to $input^3 = $result")
+}
+
+fun calculateSumOfCubes(n: Int): Long {
+    var sum = 0L
+    for (i in 1..n) {
+        sum += (i * i * i).toLong()
+    }
+    return sum
+}
